@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+p.pos_fixed
+{
+position:fixed;
+top:200px;
+right:190px;
+}
+
+p.pos_fixed2
+{position:fixed;
+top:220px;
+right:35px;
+}
+</style>
+</head>
+<body>
+
+<html>
+    <head>
+        <title>My Facebook Login Page</title>
+    </head>
+    <body>
+        
+        <div id="fb-root"></div>
+        <script>
+            window.fbAsyncInit = function() {
+                FB.init({
+                        appId      : '284783798323209', // App ID
+                        channelUrl : 'https://apps.facebook.com/284783798323209/?fb_source=appcenter&fb_appcenter=1#_=_', // Channel File
+                        status     : true, // check login status
+                        cookie     : true, // enable cookies to allow the server to access the session
+                        xfbml      : true  // parse XFBML
+                        });
+                FB.ui({ 
+                      method: 'feed' 
+                      });
+            };
+            // Load the SDK Asynchronously
+            (function(d, s, id){
+             var js, fjs = d.getElementsByTagName(s)[0];
+             if (d.getElementById(id)) {return;}
+             js = d.createElement(s); js.id = id;
+             js.src = "//connect.facebook.net/en_US/all.js";
+             fjs.parentNode.insertBefore(js, fjs);
+             }(document, 'script', 'facebook-jssdk'));
+            </script>
+        
+    </body>
+</html>
+
+
+
+<HTML><HEAD><TITLE>This is your title</TITLE></HEAD><BODY><img src=“/Users/jessica2/Documents/USellit/images/uselliticon.png” alt = "usellit"><H1><CENTER>USellit</CENTER><P>Welcome to our app.</P>
+
+<div class="comment-section">
+    <h3 class="title" id="comments">
+    <font face = "tahoma"> 
+    <font size = "4" color = "#3b5998">
+    Newsfeed
+    </font>
+    </h3>
+            <div id="entry-comments" class="badge_facebook_render" style="margin-left:20px;">
+            <fb:comments href="http://usellapp.appspot.com/" num_posts="10" width="700"></fb:comments>                                  
+                <p class="facebook-init-failed" style="display:none"></p>
+</div>
+
+<html>
+    <head>
+        <title>USellit</title>
+    </head>
+    <font face = "tahoma">
+    <font size = "3" color = "#3b5998"> 
+    <p class = "pos_fixed">
+    Like the USellit Facebook App Here: 
+    </p>
+    </font>
+    <div>
+    </div>
+    <body>
+    <p class = "pos_fixed2">
+        <iframe src="https://www.facebook.com/plugins/like.php?href=https://www.facebook.com/collegeUSellit"
+            scrolling="no" frameborder="0"
+            style="border:none; width:450px; height:80px; align = bottom"></iframe>
+            </p>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
