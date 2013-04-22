@@ -2,6 +2,7 @@
 # Data is stored hierarchically: all items belong to a user,
 # all users belong to a network.
 
+from google.appengine.ext import db
 
 # An object representing a network (a college/university/other
 # community group if we include non-colleges)

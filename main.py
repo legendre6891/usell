@@ -12,6 +12,8 @@ import facebook
 from google.appengine.api import users
 import webapp2
 
+from model import *
+
 
 ## API Keys go here!
 _FbApiKey = '284783798323209'
@@ -38,6 +40,31 @@ class MainPage(webapp.RequestHandler):
         '''
         path = os.path.join(os.path.dirname(__file__), 'main.html')
         self.response.out.write(template.render(path, {}))
+
+        # read new item post: parse it and stick it in the db
+
+        content = self.request.get("content").split()
+        
+        if len(content) != 4:
+            self.response.out.write("Invalid entry")
+
+        else:
+            collegeName   = content[0]
+            userFirstName = content[1]
+            userLastName  = content[2]
+            itemName      = content[3]
+
+            # college = Network(name = collegeName)
+            # Network.put(college)
+
+            exists = False
+            q = Network.all()
+            q.filter("name =", collegeName)            
+            q.run(limit=1)
+            for entity in q:
+                exists = True
+            self.response.out.write(exists)
+                        
 
     def post(self):
         self.get()

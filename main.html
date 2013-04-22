@@ -10,11 +10,10 @@
         <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
         <script type="text/javascript" src="/scripts/jquery.js"></script>
         
-        <form action="/filter" method="post" id="filterform">
+        <form method="post">
             <div>
-                <div>Search: <input type="text" id="abbrev" name="abbrev" autocomplete="off"></div>
-                <div>You've selected: <input type="input" id="category" name="category" readonly value="(Empty)" size=60></div>
-                <vid><input type="submit" value="Submit Your Post">
+                <div><textarea name="content" rows="3" cols="60"></textarea></div>
+                <div><input type="submit" value="New item"></div>
             </div>
         </form>
         
