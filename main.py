@@ -54,16 +54,23 @@ class MainPage(webapp.RequestHandler):
             userLastName  = content[2]
             itemName      = content[3]
 
-            # college = Network(name = collegeName)
-            # Network.put(college)
+            college = Network(name = collegeName)
+            if college.exists() == None:
+                Network.put(college)
+            else:
+                college = college.exists()
 
-            exists = False
-            q = Network.all()
-            q.filter("name =", collegeName)            
-            q.run(limit=1)
-            for entity in q:
-                exists = True
-            self.response.out.write(exists)
+            user = User(firstName = userFirstName,
+                lastName = userLastName)
+            if not user.exists():
+                User.put(user)
+
+            item = Item(name = itemName)
+            if not item.exists():
+                Item.put(item)
+
+
+            
                         
 
     def post(self):

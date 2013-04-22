@@ -10,17 +10,47 @@ class Network(db.Model):
     name = db.StringProperty()
     # some form of token
 
+    def exists(self):
+        ex = False
+        q = Network.all()
+        q.filter("name =", self.name)            
+        q.run(limit=1)
+        for entity in q:
+            return entity
+        return None
+
 # An object representing a user of our application
 class User(db.Model):
-    first_name = db.StringProperty()
-    last_name = db.StringProperty()
+    firstName = db.StringProperty()
+    lastName = db.StringProperty()
     # fb_id_token
 
     def fullName(self):
-        return self.first_name + " " + self.last_name
+        return self.firstName + " " + self.lastName
+
+    def exists(self):
+        ex = False
+        q = User.all()
+        q.filter("firstName =", self.firstName)
+        q.filter("lastName =", self.lastName)
+        q.run(limit=1)
+        for entity in q:
+            return entity
+        return None
 
 # An object representing an item within the marketplace
 class Item(db.Model):
     name = db.StringProperty()
     description = db.StringProperty(multiline=True)
     # photo?
+
+    def exists(self):
+        ex = False
+        q = Item.all()
+        q.filter("name =", self.name)            
+        q.run(limit=1)
+        for entity in q:
+            return entity
+        return None
+
+
