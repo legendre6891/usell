@@ -41,10 +41,17 @@ class MainPage(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__), 'main.html')
         self.response.out.write(template.render(path, {}))
 
-        # read new item post: parse it and stick it in the db
+
+        # read in content from input box
+        # input must be of form:
+        #
+        # college
+        # first last
+        # item
 
         content = self.request.get("content").split()
         
+        # parse input
         if len(content) != 4:
             self.response.out.write("Invalid entry")
 
@@ -53,6 +60,13 @@ class MainPage(webapp.RequestHandler):
             userFirstName = content[1]
             userLastName  = content[2]
             itemName      = content[3]
+
+            # create db entries, store them if they're new
+
+            # TODO:
+            # set up appropriate hierarchy:
+            # user parent should be college, item parent should
+            # be user.
 
             college = Network(name = collegeName)
             if college.exists() == None:

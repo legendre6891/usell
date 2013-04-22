@@ -10,6 +10,8 @@ class Network(db.Model):
     name = db.StringProperty()
     # some form of token
 
+
+    # test if a given value is in the database
     def exists(self):
         ex = False
         q = Network.all()
@@ -25,9 +27,11 @@ class User(db.Model):
     lastName = db.StringProperty()
     # fb_id_token
 
+    # return full name
     def fullName(self):
         return self.firstName + " " + self.lastName
 
+    # test if a given value is in the database
     def exists(self):
         ex = False
         q = User.all()
@@ -44,6 +48,7 @@ class Item(db.Model):
     description = db.StringProperty(multiline=True)
     # photo?
 
+    # test if a given value is in the database
     def exists(self):
         ex = False
         q = Item.all()
