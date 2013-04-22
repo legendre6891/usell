@@ -1,0 +1,112 @@
+
+<html>
+    <head>
+        <title>ShelfTalkers</title>
+        <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+        <script type="text/javascript" src="http://www.ilike.com/api/js"></script>
+        <script type="text/javascript" src="/js/jquery.js"></script>
+        <script type="text/javascript">
+            
+            jQuery.noConflict();
+            
+            var _iLikeDevKey = "{{ iLikeDevKey }}";
+            var currentdiv = null;
+            function addTrack(artist,sdiv)
+            {
+                currentdiv = sdiv;
+                iLikeSongChooser({onSelected: songFound, searchString: artist});
+            }
+            
+            function songFound(trackId, songName, artistName) 
+            {
+                iLikeDisplaySong({elId:currentdiv, trackIds:trackId});
+            }  
+            
+            function parse()
+            {
+                jQuery("#btnsubmit").attr("disabled","disabled");
+                var txt = jQuery("#talk").val();
+                var i = txt.indexOf("[");
+                if(i > -1)
+                {
+                    var j = txt.indexOf("]");
+                    if(j > i)
+                    {
+                        var ptxt = txt.substring(i+1,j);
+                        var type = "";
+                        if (jQuery("input:checked").val() == "music")
+                        type = "Music";
+                        else if (jQuery("input:checked").val() == "movies")
+                        type = "Movie";
+                        else if (jQuery("input:checked").val() == "games")
+                        type = "Game";
+                        else if (jQuery("input:checked").val() == "hardgoods")
+                        type = "HardGood";
+                        else if (jQuery("input:checked").val() == "dice")
+                        type = "";
+                        
+                        var ntxt = txt.substring(0,i) + ptxt + txt.substring(j+1,txt.length);
+                        window.location = '/?{{ params }}&p='+escape(ptxt)+'&t='+escape(ntxt);
+                    }
+                    else
+                    {
+                        alert("Please specify a product or artist using square brackets. Ex: 'I love [U2]!'");
+                    }
+                }
+                else
+                {
+                    alert("Please specify a product or artist using square brackets. Ex: 'I love [U2]!'");
+                }
+                
+                jQuery("#btnsubmit").attr("disabled","disabled");
+            }
+            
+            </script>
+    </head>
+    <body>
+        <form action="" method="post">
+            <div class="xsmall">
+                <label class="title">What do you wanna talk about?</label><br />
+                <input id="cat1" name="categories" type="radio" value="music" checked="checked" />Music 
+                <input id="cat2" name="categories" type="radio" value="movies" disabled="disabled" />Movies 
+                <input id="cat3" name="categories" type="radio" value="games" disabled="disabled" />Games 
+                <input id="cat4" name="categories" type="radio" value="hardware" disabled="disabled" />Hardware 
+                <input id="cat5" name="categories" type="radio" value="dice" disabled="disabled" />Dice Bag!<br />
+                <textarea cols="40" id="talk" name="talk" rows="2"></textarea>
+                <input id="btnsubmit" type="button" value="submit" onclick="parse();" />
+            </div>
+            <div class="example">
+                Start a discussion about a product you're interested in. Use '[' and ']' to
+                surround the product name you want to discuss. This will tell ShelfTalkers to
+                add a link to more information.
+                <br /><br />
+                For example: <i>I think [death cab] is an awesome band!</i>
+            </div>
+            <div class="example">
+                
+                {% if products %}
+                {% for product in products %}
+                <div class="product">
+                    {% if product.thumbnailImage %}
+                    <div class="imgfloatl" style="cursor:pointer;cursor:hand;" onclick="chooseProduct({{product.productId}})"'>
+                        <img alt="{{ product.name }}" title="{{ product.name }}" src="{{ product.thumbnailImage }}" />
+                        </div>
+                        {% endif %}
+                        {{ product.name }}<br/>by {{ product.artistName }}<br/>${{ product.regularPrice }}
+                        <div id="trackdiv{{product.productId}}"></div>
+                        <div class="xsmallgrey"><i>{{ product.text }}</i></div>
+                        <div class="postlink"><a href="#" onclick="addTrack('{{product.artistName}}','trackdiv{{product.productId}}');return false;">add track</a> <a href="#{{product.productId}}">post</a></div></div>    
+                        {% endfor %}
+                        
+                        {% else %}
+                        <div class="product"><b>Nothing related found.</b></div>
+                        {% endif %}
+                        
+                        {% for error in errors %}
+                        error: {{ error.desc }}        
+                        {% endfor %}
+                        </div>
+                        </form>
+                        
+                        </body>
+                        </html>
