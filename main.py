@@ -8,91 +8,50 @@ from google.appengine.ext import webapp
 from google.appengine.api import memcache
 from google.appengine.api import urlfetch
 from google.appengine.ext.webapp.util import run_wsgi_app
-import facebook
 from google.appengine.api import users
 import webapp2
 
 from model import *
 
+# Import for data storage
+from google.appengine.ext import db
 
-## API Keys go here!
-_FbApiKey = '284783798323209'
-_FbSecret = '488d93b118272ac03038445c1f4c3c15'
+
+class AdvancedSell(db.Model):
+    # Item Name
+    itemName = db.StringProperty(required=False)
+    # Price of Item
+    price = db.StringProperty(required=False)
+    # Description of Item
+    description = db.StringProperty(required=False)
+    
+    # Identifies when message was posted
+    when = db.DateTimeProperty(auto_now_add=True)
+
+    
 
 class MainPage(webapp.RequestHandler):
     def get(self):
+        sellposts = db.GqlQuery(
+                             'SELECT * FROM AdvancedSell '
+                             'ORDER BY when DESC')
+        values = {'sellposts':sellposts}
         
-        products = []
-        errors = []
-    
-        ## instantiate the Facebook API wrapper with your FB App's keys
-        fb = facebook.Facebook(_FbApiKey, _FbSecret)
-    
-        ## check that the user is logged into FB and has added the app
-        ## otherwise redirect to where the user can login and install
-        if fb.check_session(self.request) and fb.added:
-            pass
-        '''
-        else:
-            url = fb.get_add_url()
-            self.response.out.write('<script language="javascript">top.location.href="' + url + '"</script>')
-            return
-        '''
+        # Uncomment this to delete all material in data store
+        db.delete(sellposts)
+
         path = os.path.join(os.path.dirname(__file__), 'main.html')
-        self.response.out.write(template.render(path, {}))
-
-
-        # read in content from input box
-        # input must be of form:
-        #
-        # college
-        # first last
-        # item
-
-        content = self.request.get("content").split()
-        
-        # parse input
-        if len(content) != 4:
-            self.response.out.write("Invalid entry")
-
-        else:
-            collegeName   = content[0]
-            userFirstName = content[1]
-            userLastName  = content[2]
-            itemName      = content[3]
-
-            # create db entries, store them if they're new
-
-            # TODO:
-            # set up appropriate hierarchy:
-            # user parent should be college, item parent should
-            # be user.
-
-            college = Network(name = collegeName)
-            if college.exists() == None:
-                Network.put(college)
-            else:
-                college = college.exists()
-
-            user = User(firstName = userFirstName,
-                lastName = userLastName)
-            if not user.exists():
-                User.put(user)
-
-            item = Item(name = itemName)
-            if not item.exists():
-                Item.put(item)
-
-
-
-
-            
-                        
+        self.response.out.write(template.render(path,values))
 
     def post(self):
-        self.get()
-
-
+        itemName = AdvancedSell(itemName=self.request.get('itemName'), \
+                         price=self.request.get('price'), \
+                         description=self.request.get('description'))
+        # Puts it in the data store
+        itemName.put()
+        # Redirect user to main page
+        self.redirect('/')
+        #self.get()
 
 
 application = webapp.WSGIApplication(

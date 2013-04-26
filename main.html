@@ -4,11 +4,10 @@
     <head>
         <title>USellit</title>     
     </head>
-    
     <body>
-        
         <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
         <script type="text/javascript" src="/scripts/jquery.js"></script>
+<!--
         <p>Input prototype.  Data must be of form college firstname lastname item</p>
         <form method="post">
             <div>
@@ -16,14 +15,58 @@
                 <div><input type="submit" value="New item"></div>
             </div>
         </form>
+-->
+<!------------------------------------- Sell an Item Section ------------------------------------->
+
+        <form action="" method="post" accept-charset="utf-8">
+            <fieldset name="Sell An Item">
+                <legend>User information</legend>
+                <label>Item Name:</label>
+                <input type="text" name="itemName" id="itemName" size="40">
+                    <label for="price">Price:</label>
+                    <input name="price" type="number" id="price" step="any"> <br /> 
+                        <label for="description">Description:</label>
+                        <textarea type="text" name="description" id="description" 
+                            rows="3" cols="60"></textarea>
+                <!-- Submit button -->
+                <div><input type="submit" value="Post New item"></div>
+            </fieldset>
+        </form>
+    </body>
+</html>
+<!------------------------------------------- Sell Posts ------------------------------------------->    
+<html>
+    <h2>Most Recent Items Being Sold</h2> 
+</html>
+        {% for post in sellposts %}
+        <fieldset name="Items Being Sold">
+            <div><p>Item Name: {{post.itemName}}</p>
+                 <p>Price: {{post.price}}</p>
+                 <p>Description: {{post.description}}</p>
+            </div>
+        </fieldset>
+        {% endfor %}
         
-        
-        <!-- Horzontal Line Across Page -->
+<html>
+    <body>
+        <a href="sell_page.html">Post an Item to Sell!</a>
+
+        <!------------------------- Horzontal Line Across Page ------------------------->
         <div style="margin-left:-8px;margin-right:-8px">
             <hr style="color:Black;background-color:Black;border:0;width:100%;height:1px;" />
         </div>
         
-        <!-- Like our Page -->
+        <!------------------------- Print Sell Item Input ------------------------->
+        <form method="display_input">
+            .........
+        </form>
+        
+        <!------------------------- Horzontal Line Across Page ------------------------->
+        <div style="margin-left:-8px;margin-right:-8px">
+            <hr style="color:Black;background-color:Black;border:0;width:100%;height:1px;" />
+        </div>
+        
+        <!------------------------------ Like our Page ------------------------------>
         
         <h2>Like the USellit Facebook App Here:</h2> 
         
@@ -31,8 +74,8 @@
             scrolling="no" frameborder="0"
             style="border:none; width:450px; height:80px"></iframe>
         
-        <!-- Checks whether you are logged in to facebook and then sets up
-         for Facebook commenting section below... -->
+        <!-------------------------  Checks whether you are logged in to facebook and then sets up
+         for Facebook commenting section below... ------------------------- -->
         
        <!-- <h2>My Facebook Login Page</h2> -->
         
