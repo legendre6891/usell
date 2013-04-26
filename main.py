@@ -24,6 +24,10 @@ class AdvancedSell(db.Model):
     price = db.StringProperty(required=False)
     # Description of Item
     description = db.StringProperty(required=False)
+    # Image of item
+    image = db.StringProperty(required=False)
+    # Category of item
+    category = db.StringProperty(required=False)
     
     # Identifies when message was posted
     when = db.DateTimeProperty(auto_now_add=True)
@@ -38,20 +42,24 @@ class MainPage(webapp.RequestHandler):
         values = {'sellposts':sellposts}
         
         # Uncomment this to delete all material in data store
-        db.delete(sellposts)
+        #db.delete(sellposts)
 
         path = os.path.join(os.path.dirname(__file__), 'main.html')
         self.response.out.write(template.render(path,values))
+    
+    #self.redirect('/')
 
     def post(self):
+        self.get()
         itemName = AdvancedSell(itemName=self.request.get('itemName'), \
                          price=self.request.get('price'), \
-                         description=self.request.get('description'))
+                         description=self.request.get('description'), \
+                         image=self.request.get('image'), \
+                         category=self.request.get('category'), )
         # Puts it in the data store
         itemName.put()
         # Redirect user to main page
         self.redirect('/')
-        #self.get()
 
 
 application = webapp.WSGIApplication(

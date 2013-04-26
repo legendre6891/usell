@@ -17,21 +17,39 @@
         </form>
 -->
 <!------------------------------------- Sell an Item Section ------------------------------------->
-
         <form action="" method="post" accept-charset="utf-8">
             <fieldset name="Sell An Item">
                 <legend>User information</legend>
                 <label>Item Name:</label>
                 <input type="text" name="itemName" id="itemName" size="40">
-                    <label for="price">Price:</label>
-                    <input name="price" type="number" id="price" step="any"> <br /> 
-                        <label for="description">Description:</label>
-                        <textarea type="text" name="description" id="description" 
-                            rows="3" cols="60"></textarea>
+                
+                <label for="price">Price:</label>
+                <input name="price" type="number" id="price" step="any"> <br /> 
+                        
+                <!-- Description -->
+                <label for="description">Description:</label>
+                <textarea type="text" name="description" id="description" 
+                    rows="3" cols="60"></textarea> <br />
+                        
+                <!-- Category Drop down box -->
+                <label for="category">Category: </label>
+                <select name="category">
+                    <option value="Books">Books</option>
+                    <option value="Furniture">Furniture</option>
+                </select> <br />                     
+                        
+                <!-- Upload itme picture -->
+                <form action="upload_file.php" method="post"
+                    enctype="multipart/form-data">
+                    <label for="image">Item Image Upload:</label>
+                    <input type="file" name="image" id="image"><br />
+                </form>                           
+                        
                 <!-- Submit button -->
-                <div><input type="submit" value="Post New item"></div>
-            </fieldset>
+                <div><input type="submit" name="Submit" value="Post New item"></div>   
+            </fieldset>      
         </form>
+        
     </body>
 </html>
 <!------------------------------------------- Sell Posts ------------------------------------------->    
@@ -43,6 +61,8 @@
             <div><p>Item Name: {{post.itemName}}</p>
                  <p>Price: {{post.price}}</p>
                  <p>Description: {{post.description}}</p>
+                 <p>Image: {{post.image}}</p>
+                 <p>Category: {{post.category}}</p>
             </div>
         </fieldset>
         {% endfor %}
