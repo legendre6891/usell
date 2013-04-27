@@ -38,7 +38,8 @@ class MainPage(webapp.RequestHandler):
     def get(self):
         sellposts = db.GqlQuery(
                              'SELECT * FROM AdvancedSell '
-                             'ORDER BY when DESC')
+                             'ORDER BY when DESC '
+                             'LIMIT 3 ')
         values = {'sellposts':sellposts}
         
         # Uncomment this to delete all material in data store
@@ -46,11 +47,8 @@ class MainPage(webapp.RequestHandler):
 
         path = os.path.join(os.path.dirname(__file__), 'main.html')
         self.response.out.write(template.render(path,values))
-    
-    #self.redirect('/')
 
     def post(self):
-        self.get()
         itemName = AdvancedSell(itemName=self.request.get('itemName'), \
                          price=self.request.get('price'), \
                          description=self.request.get('description'), \
@@ -58,8 +56,10 @@ class MainPage(webapp.RequestHandler):
                          category=self.request.get('category'), )
         # Puts it in the data store
         itemName.put()
+        
         # Redirect user to main page
         self.redirect('/')
+        
 
 
 application = webapp.WSGIApplication(

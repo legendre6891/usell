@@ -3,23 +3,13 @@
 <html>
     <head>
         <title>USellit</title>     
+        <h1 align="center">Welcome to USellit!</h1>
     </head>
     <body>
-        <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
-        <script type="text/javascript" src="/scripts/jquery.js"></script>
-<!--
-        <p>Input prototype.  Data must be of form college firstname lastname item</p>
-        <form method="post">
-            <div>
-                <div><textarea name="content" rows="3" cols="60"></textarea></div>
-                <div><input type="submit" value="New item"></div>
-            </div>
-        </form>
--->
-<!------------------------------------- Sell an Item Section ------------------------------------->
+<!------------------------------ Sell an Item Input Section ------------------------------>
         <form action="" method="post" accept-charset="utf-8">
             <fieldset name="Sell An Item">
-                <legend>User information</legend>
+                <legend>Post an Item to Sell!</legend>
                 <label>Item Name:</label>
                 <input type="text" name="itemName" id="itemName" size="40">
                 
@@ -38,12 +28,12 @@
                     <option value="Furniture">Furniture</option>
                 </select> <br />                     
                         
-                <!-- Upload itme picture -->
+                <!-- Upload item picture --> 
                 <form action="upload_file.php" method="post"
                     enctype="multipart/form-data">
-                    <label for="image">Item Image Upload:</label>
-                    <input type="file" name="image" id="image"><br />
-                </form>                           
+                    <label for="file">Image File:</label>
+                    <input type="file" name="file" id="file"><br>
+                </form>
                         
                 <!-- Submit button -->
                 <div><input type="submit" name="Submit" value="Post New item"></div>   
@@ -52,21 +42,25 @@
         
     </body>
 </html>
-<!------------------------------------------- Sell Posts ------------------------------------------->    
+<!---------------------------------- Sell Posts ---------------------------------->    
 <html>
     <h2>Most Recent Items Being Sold</h2> 
 </html>
+        <!-- Obtain current posts from the data store -->
         {% for post in sellposts %}
         <fieldset name="Items Being Sold">
-            <div><p>Item Name: {{post.itemName}}</p>
-                 <p>Price: {{post.price}}</p>
-                 <p>Description: {{post.description}}</p>
-                 <p>Image: {{post.image}}</p>
-                 <p>Category: {{post.category}}</p>
+            <div style="color:#0000FF">
+                <p>Item Name: {{post.itemName}}</p>
+                <p>Price: {{post.price}}</p>
+                <p>Description: {{post.description}}</p>
+                <p>Image: {{post.image}}</p>
+                <p>Category: {{post.category}}</p>
             </div>
         </fieldset>
         {% endfor %}
-        
+
+
+<!---------------------------------- Other Stuff ---------------------------------->    
 <html>
     <body>
         <a href="sell_page.html">Post an Item to Sell!</a>
@@ -76,15 +70,6 @@
             <hr style="color:Black;background-color:Black;border:0;width:100%;height:1px;" />
         </div>
         
-        <!------------------------- Print Sell Item Input ------------------------->
-        <form method="display_input">
-            .........
-        </form>
-        
-        <!------------------------- Horzontal Line Across Page ------------------------->
-        <div style="margin-left:-8px;margin-right:-8px">
-            <hr style="color:Black;background-color:Black;border:0;width:100%;height:1px;" />
-        </div>
         
         <!------------------------------ Like our Page ------------------------------>
         
@@ -94,8 +79,7 @@
             scrolling="no" frameborder="0"
             style="border:none; width:450px; height:80px"></iframe>
         
-        <!-------------------------  Checks whether you are logged in to facebook and then sets up
-         for Facebook commenting section below... ------------------------- -->
+        <!---------------  Checks whether you are logged in to facebook  ----------------->
         
        <!-- <h2>My Facebook Login Page</h2> -->
         
@@ -121,14 +105,14 @@
              js.src = "//connect.facebook.net/en_US/all.js";
              fjs.parentNode.insertBefore(js, fjs);
              }(document, 'script', 'facebook-jssdk'));
-            </script>
+        </script>
         
         <!-- Facebook comments section -->
         <div class="comment-section">
             <h3>Newsfeed</h3>
             <div id="entry-comments" class="badge_facebook_render" style="margin-left:20px;">
                 <fb:comments href="http://usellapp.appspot.com/" num_posts="10" width="500"></fb:comments>									
-                    <p class="facebook-init-failed" style="display:none"></p>
+                <p class="facebook-init-failed" style="display:none"></p>
             </div>
             
             
