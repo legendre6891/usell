@@ -82,22 +82,26 @@ class MainPage(webapp.RequestHandler):
             item = Item(name = itemName)
             if not item.exists():
                 Item.put(item)
-
-
-
-
-            
-                        
-
     def post(self):
         self.get()
 
 
 
+class FeedMe(webapp.RequestHandler):
+    """
+    """
+    def get(self):
+        self.response.write('<html><body>You wrote:<pre>')
+        # self.response.write(cgi.escape(self.request.get('content')))
+        self.response.write(cgi.escape(self.request.path))
+        self.response.write('</pre></body></html>')
+
 
 application = webapp.WSGIApplication(
-                                     [('/', MainPage),],
+                                     [('/', MainPage),
+                                      ('/stuff.*', FeedMe),],
                                      debug=True)
+
 
 def main():
     run_wsgi_app(application)
